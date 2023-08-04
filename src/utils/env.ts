@@ -17,5 +17,6 @@ export const environment = cleanEnv(process.env, {
 
 // We don't want to use the environment variable directly now that we've validated it.
 // To enforce this practice, we *could* set process.env to an empty object (see below) or (better yet) add a linter rule.
+// We won't do either here. The first approach would break prisma and the second is overkill for the task at hand.
 
 // process.env = {};
