@@ -1,4 +1,4 @@
-// env.ts
+// utils/environment.ts
 // This file handles the loading, validation, transformation, & typing of environment variables.
 
 // The approach seen below with envalid ensures two things work better than they would with .env
