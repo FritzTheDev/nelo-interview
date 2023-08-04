@@ -146,7 +146,7 @@ async function seed() {
     });
 
     await Promise.all([...restaurantPromises, ...dinerPromises]);
-ß}
+}
 
 seed()
     

@@ -44,4 +44,4 @@ yarn.lock
 .vscode
 
 # ignore .db file (SQLite)
-*.db
+*.sqlite
