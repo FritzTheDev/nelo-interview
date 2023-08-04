@@ -13,8 +13,8 @@ import { environment } from "./utils/environment";
 export const app = Express();
 
 // Configure middleware
-app.use(json());
-environment.NODE_ENV === "development" ? app.use(cors()) : app.use(cors({ origin: environment.CLIENT_ROOT }));
-environment.NODE_ENV === "development" ? app.use(morgan("dev")) : app.use(morgan("tiny"));
+app.use(json()); // Request body parsing
+environment.NODE_ENV === "development" ? app.use(cors()) : app.use(cors({ origin: environment.CLIENT_ROOT })); // CORS
+environment.NODE_ENV === "development" ? app.use(morgan("dev")) : app.use(morgan("tiny")); // Logging
 
 // Register routers
