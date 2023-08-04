@@ -39,3 +39,9 @@ dist/**/*
 
 # ignore yarn.lock
 yarn.lock
+
+# ignore .vscode
+.vscode
+
+# ignore .db file (SQLite)
+*.db
