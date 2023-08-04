@@ -14,7 +14,6 @@ enum attributes {
   carnivore = "Carnivore",
 };
 
-// Define restaurant seed data.
 const restaurants = [
   {
     name: "Meat & Greet",
@@ -123,6 +122,7 @@ async function seed() {
         });
     });
 
+    // Seed diners with attributes
     const dinerPromises = diners.map((diner) => {
         return prisma.diner.create({
             data: {
@@ -155,7 +155,7 @@ seed()
 /**
  * Converts the table data into a flat array of integers, each of which correspond with the number of seats at a table.
  * 
- * @param tables 
+ * @param tables
  * @returns number[]
  */
 function convertTableDataIntoFlatArray(tables: { seats: number; count: number }[]): number[] {
