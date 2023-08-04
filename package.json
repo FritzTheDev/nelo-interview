@@ -8,11 +8,13 @@
     "build": "tsc",
     "start": "node dist/index.js",
     "test": "jest",
-    "test:watch": "jest --watchAll"
+    "test:watch": "jest --watchAll",
+    "seed": "ts-node prisma/seed.ts"
   },
   "author": "Frederick Johnson",
   "license": "UNLICENSED",
   "dependencies": {
+    "@prisma/client": "^5.1.1",
     "@types/cors": "^2.8.13",
     "@types/express": "^4.17.17",
     "@types/morgan": "^1.9.4",
