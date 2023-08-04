@@ -5,6 +5,7 @@
 // 1) vars that the app needs to run are defined & shaped then typed correctly. If something's wrong, we'll get a useful error.
 // 2) vars that the app needs to run are typed. This saves us a headache fixing typescript warnings while enforcing type safety.
 
+import "dotenv/config";
 import { cleanEnv, str, port } from "envalid";
 
 export const environment = cleanEnv(process.env, {
