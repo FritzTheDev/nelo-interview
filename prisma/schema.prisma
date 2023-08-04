@@ -69,6 +69,5 @@ model RestaurantAttribute {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  canonicalName  String
-  preferenceName String
+  name String
 }
