@@ -9,3 +9,66 @@ datasource db {
   provider = "sqlite"
   url      = env("DATABASE_URL")
 }
+
+// Models
+model Restaurant {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  name String
+
+  tables       Table[]
+  reservations Reservation[]
+}
+
+model Table {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  name     String
+  capacity Int
+
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id])
+  restaurantId String
+
+  reservations Reservation[]
+}
+
+model Reservation {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  name String
+  date DateTime
+
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id])
+  restaurantId String
+
+  table   Table  @relation(fields: [tableId], references: [id])
+  tableId String
+
+  diners Diner[]
+}
+
+model Diner {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  name String
+
+  Reservation   Reservation? @relation(fields: [reservationId], references: [id])
+  reservationId String?
+}
+
+model RestaurantAttribute {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  canonicalName  String
+  preferenceName String
+}
