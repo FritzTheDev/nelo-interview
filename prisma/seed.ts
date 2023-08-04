@@ -1,3 +1,7 @@
+// seed.ts
+// This file is used to seed the database with data.
+// It must not used in production - only for testing & development.
+
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
