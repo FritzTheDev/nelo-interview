@@ -7,7 +7,7 @@ import cors from "cors";
 import morgan from "morgan";
 import Express, { json } from "express";
 
-import { environment } from "./utils/env";
+import { environment } from "./utils/environment";
 
 // Create the express application
 export const app = Express();
