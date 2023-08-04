@@ -13,6 +13,7 @@ export const environment = cleanEnv(process.env, {
     choices: ["development", "production", "test"],
     default: "development",
   }),
+  CLIENT_ROOT: str({ default: "http://localhost:3000" }),
 });
 
 // We don't want to use the environment variable directly now that we've validated it.
