@@ -20,6 +20,7 @@ model Restaurant {
 
   tables       Table[]
   reservations Reservation[]
+  attributes   RestaurantAttribute[]
 }
 
 model Table {
@@ -60,8 +61,8 @@ model Diner {
 
   name String
 
-  Reservation   Reservation? @relation(fields: [reservationId], references: [id])
-  reservationId String?
+  requiredRestaurauntAttributes RestaurantAttribute[]
+  reservations                  Reservation[]
 }
 
 model RestaurantAttribute {
@@ -70,4 +71,7 @@ model RestaurantAttribute {
   updatedAt DateTime @updatedAt
 
   name String
+
+  diners      Diner[]
+  restaurants Restaurant[]
 }
