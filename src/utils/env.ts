@@ -8,12 +8,12 @@
 import { cleanEnv, str, port } from "envalid";
 
 export const environment = cleanEnv(process.env, {
-  PORT: port({ default: 3000 }),
+  PORT: port(),
   NODE_ENV: str({
     choices: ["development", "production", "test"],
     default: "development",
   }),
-  CLIENT_ROOT: str({ default: "http://localhost:3000" }),
+  CLIENT_ROOT: str(),
 });
 
 // We don't want to use the environment variable directly now that we've validated it.
