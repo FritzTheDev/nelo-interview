@@ -28,8 +28,7 @@ model Table {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  name     String
-  capacity Int
+  seats Int
 
   restaurant   Restaurant @relation(fields: [restaurantId], references: [id])
   restaurantId String
@@ -43,7 +42,7 @@ model Reservation {
   updatedAt DateTime @updatedAt
 
   name String
-  date DateTime
+  dateTime DateTime
 
   restaurant   Restaurant @relation(fields: [restaurantId], references: [id])
   restaurantId String
