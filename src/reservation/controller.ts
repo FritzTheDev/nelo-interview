@@ -37,7 +37,6 @@ export async function findAvailableRestaurants(data: RestaurantSearchBody) {
       },
     },
   });
-  
 
   // If any members of the party are occupied, throw an error.
   if (occupiedDiners.length > 0) {
@@ -99,7 +98,7 @@ export async function findAvailableRestaurants(data: RestaurantSearchBody) {
  * - Returns the reservation.
  * - Throws an error if the restaurant does not have a table that can accommodate the party.
  * - Throws an error if the party is not free at the given time.
-  */
+ */
 export async function createReservation(data: CreateReservationBody) {
   // Ensure every member of the party is free at the given time.
   const occupiedDiners = await prisma.diner.findMany({
@@ -108,7 +107,7 @@ export async function createReservation(data: CreateReservationBody) {
         in: data.party,
       },
       reservations: {
-         some: {
+        some: {
           dateTime: {
             gte: data.dateTime,
             lte: new Date(data.dateTime.getTime() + 2 * 60 * 60 * 1000),
@@ -146,7 +145,7 @@ export async function createReservation(data: CreateReservationBody) {
   if (candidateTable === null) {
     throw new TableNotAvailableError();
   }
-  console.log(data.restaurantId)
+  console.log(data.restaurantId);
   // Create the reservation.
   const reservation = await prisma.reservation.create({
     data: {
