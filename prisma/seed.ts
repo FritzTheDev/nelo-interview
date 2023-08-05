@@ -132,7 +132,7 @@ async function seed() {
       data: {
         name: restaurant.name,
         // Create a string of this restaurant's attribute ids to store in the database
-        attributeString: createdAttributes
+        attributeIds: createdAttributes
           .filter((attribute) => Object.values(restaurant.attributes).includes(attribute.name))
           .map((attribute) => attribute.id)
           .join(","),
