@@ -8,7 +8,7 @@ This is my response to a take-home assignment from nelo, asking me to build an A
 
 - Clone this repository
 - Run `npm install` to install dependencies
-- Run `npm run seed` to create & seed the sqlite database
+- Run `npm run migrate` to create & seed the sqlite database
 - Run `npm run dev` to start the server in development mode
 
 ## Testing
@@ -22,19 +22,18 @@ This is my response to a take-home assignment from nelo, asking me to build an A
 - [x] Configure Prisma & take a crack at the schema.
 - [x] Craft a seed.ts script & use it to seed a sqlite database.
 - [x] Validation & Error Handling Middleware
-- [/] Create "reservations" router & controller modules
-  - [x] validation schema for reservation requests
-  - [ ] validation schema for reservation cancellations
-  - [ ] controller to find a reservation slot
-  - [/] controller to find a reservation slot
-  - [ ] controller to book a reservation
-  - [ ] controller to cancel a reservation
+- [x] Create "reservations" router & controller modules
+  - [x] validation schema for reservation search
+  - [x] validation schema for reservation creation
+  - [x] controller to find a reservation slot
+  - [x] controller to find a reservation slot
+  - [x] controller to book a reservation
+  - [x] controller to cancel a reservation
   - [x] router to find a reservation slot
-  - [ ] endpoint to book a reservation
-  - [ ] endpoint to cancel a reservation
-  - [/] tie them together with a router
+  - [x] endpoint to book a reservation
+  - [x] endpoint to cancel a reservation
+  - [x] tie them together with a router
 - [ ] Testing
-  - [ ] Unit tests for controller business logic with Jest
   - [ ] Endpoint tests with Jest & Supertest
   - [ ] Additional Testing as it makes sense
 - [ ] Miscellaneous
