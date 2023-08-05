@@ -37,6 +37,8 @@ This is my response to a take-home assignment from nelo, asking me to build an A
   - [ ] Unit tests for controller business logic with Jest
   - [ ] Endpoint tests with Jest & Supertest
   - [ ] Additional Testing as it makes sense
+- [ ] Miscellaneous
+  - [ ] Ensure the "Party is all free" logic in the reservation finder is correct.
 
 ## Development Notes
 
