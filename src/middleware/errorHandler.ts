@@ -19,10 +19,18 @@ export function errorHandler(err: any, _req: any, res: any, _next: any) {
         return { path, message };
       }),
     });
-  } else {
-    environment.NODE_ENV === "development" && console.error(err);
-    res.status(500).json({
-      message: "An unexpected error occurred.",
+  }
+
+  // Handles status 400 bad request errors that we know might occur
+  if (err.status === 400) {
+    res.status(400).json({
+      message: err.message,
     });
   }
+
+  // Catches the rest & logs the error to the console when in development
+  environment.NODE_ENV === "development" && console.error(err);
+  res.status(500).json({
+    message: "An unexpected error occurred.",
+  });
 }
