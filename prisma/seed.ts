@@ -66,11 +66,11 @@ const diners = [
     },
     {
         name: "Jane",
-        attributes: [attributes.nutFree, attributes.soyFree],
+        attributes: [attributes.nutFree],
     },
     {
         name: "Jill",
-        attributes: [attributes.soyFree],
+        attributes: [],
     },
     {
         name: "Jack",
@@ -78,11 +78,43 @@ const diners = [
     },
     {
         name: "Jenny",
-        attributes: [attributes.halal, attributes.carnivore],
+        attributes: [attributes.halal],
     },
     {
         name: "Jared",
-        attributes: [attributes.vegan],
+        attributes: [],
+    },
+    {
+        name: "Jones",
+        attributes: [],
+    },
+    {
+        name: "Johann",
+        attributes: [],
+    },
+    {
+        name: "Johanna",
+        attributes: [attributes.halal],
+    },
+    {
+        name: "Janet",
+        attributes: [attributes.dairyFree],
+    },
+    {
+        name: "Jasper",
+        attributes: [],
+    },
+    {
+        name: "Jupiter",
+        attributes: [],
+    },
+    {
+        name: "Jabba",
+        attributes: [attributes.nutFree],
+    },
+    {
+        name: "Jor'El",
+        attributes: [],
     },
 ]
 
