@@ -8,7 +8,7 @@ import { restaurantSearchSchema } from "./validation";
 
 const prisma = new PrismaClient();
 
-type ReservationSearchBody = z.infer<typeof restaurantSearchSchema>;
+type RestaurantSearchBody = z.infer<typeof restaurantSearchSchema>;
 
 /**
  * Find all restaurants that can be booked by a given party at a given time
@@ -17,7 +17,7 @@ type ReservationSearchBody = z.infer<typeof restaurantSearchSchema>;
  * - Checks that the restaurant has at least one table that can accommodate the party.
  * - Checks that the restaurant has all of the attributes each member of the party requires.
  */
-export async function findAvailableRestaurants(data: ReservationSearchBody) {
+export async function findAvailableRestaurants(data: RestaurantSearchBody) {
   // Ensure every member of the party is free at the given time.
   const partyIsFree = await prisma.diner.findMany({
     where: {
