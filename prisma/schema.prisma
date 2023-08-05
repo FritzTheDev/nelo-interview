@@ -19,11 +19,12 @@ model Restaurant {
   name String
 
   tables       Table[]
-  reservations Reservation[]
   attributes   RestaurantAttribute[]
 
-  // Denormalized data
-  attributeString String
+  // Intentionally denormalized data
+  // In postgres I'd use a list of strings, but sqlite doesn't support that.
+  // So I'm using a comma separated string instead.
+  attributeIds String
 }
 
 model Table {
@@ -44,11 +45,7 @@ model Reservation {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  name String
   dateTime DateTime
-
-  restaurant   Restaurant @relation(fields: [restaurantId], references: [id])
-  restaurantId String
 
   table   Table  @relation(fields: [tableId], references: [id])
   tableId String
