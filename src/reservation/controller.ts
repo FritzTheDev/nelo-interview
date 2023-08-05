@@ -21,14 +21,14 @@ type CreateReservationBody = z.infer<typeof createReservationSchema>;
  * - Checks that the restaurant has all of the attributes each member of the party requires.
  */
 export async function findAvailableRestaurants(data: RestaurantSearchBody) {
-  // Ensure every member of the party is free at the given time.
-  const bookedDiners = await prisma.diner.findMany({
+  // Find every member of the party that has a reservation in the two hours following the given time.
+  const occupiedDiners = await prisma.diner.findMany({
     where: {
       id: {
         in: data.party,
       },
       reservations: {
-        every: {
+        some: {
           dateTime: {
             gte: data.dateTime,
             lte: new Date(data.dateTime.getTime() + 2 * 60 * 60 * 1000),
@@ -37,9 +37,11 @@ export async function findAvailableRestaurants(data: RestaurantSearchBody) {
       },
     },
   });
+  
 
-  if (bookedDiners.length > 0) {
-    throw new PartyMemberBookedError(bookedDiners.map((diner) => diner.name));
+  // If any members of the party are occupied, throw an error.
+  if (occupiedDiners.length > 0) {
+    throw new PartyMemberBookedError(occupiedDiners.map((diner) => diner.name));
   }
 
   // Ensure we know the full list of attributes the party requires.
@@ -106,7 +108,7 @@ export async function createReservation(data: CreateReservationBody) {
         in: data.party,
       },
       reservations: {
-         every: {
+         some: {
           dateTime: {
             gte: data.dateTime,
             lte: new Date(data.dateTime.getTime() + 2 * 60 * 60 * 1000),
@@ -163,4 +165,14 @@ export async function createReservation(data: CreateReservationBody) {
   });
 
   return reservation;
+}
+
+// Cancel a given reservation by deleting it from the database.
+// As mentioned in the readme, this could probably benefit from being a soft-delete.
+export async function cancelReservation(id: string) {
+  await prisma.reservation.delete({
+    where: {
+      id,
+    },
+  });
 }
