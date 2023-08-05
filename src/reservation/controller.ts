@@ -5,7 +5,6 @@ import { z } from "zod";
 import { PrismaClient } from "@prisma/client";
 
 import { restaurantSearchSchema } from "./validation";
-import { RequestHandler } from "express";
 
 const prisma = new PrismaClient();
 
@@ -19,6 +18,27 @@ type ReservationSearchBody = z.infer<typeof restaurantSearchSchema>;
  * - Checks that the restaurant has all of the attributes each member of the party requires.
  */
 export async function findAvailableRestaurants(data: ReservationSearchBody) {
+  // Ensure every member of the party is free at the given time.
+  const partyIsFree = await prisma.diner.findMany({
+    where: {
+      id: {
+        in: data.party,
+      },
+      reservations: {
+        none: {
+          dateTime: {
+            gte: data.dateTime,
+            lte: new Date(data.dateTime.getTime() + 2 * 60 * 60 * 1000),
+          },
+        },
+      },
+    },
+  });
+
+  if (partyIsFree.length !== data.party.length) {
+    throw new Error("One or more members of the party is not free at the given time.");
+  }
+
   // Ensure we know the full list of attributes the party requires.
   const requiredAttributes = await prisma.restaurantAttribute.findMany({
     where: {
@@ -52,7 +72,12 @@ export async function findAvailableRestaurants(data: ReservationSearchBody) {
     },
   });
 
-  console.log(candidateRestaurants);
+  // Filter any restaurants whose attributesString doesn't contain each required attribute.
+  const filteredRestaurants = candidateRestaurants.filter((restaurant) => {
+    return requiredAttributes.every((attribute) => {
+      return restaurant.attributeString.includes(attribute.id);
+    });
+  });
 
-  return candidateRestaurants;
+  return filteredRestaurants;
 }
