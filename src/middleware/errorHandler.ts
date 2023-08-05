@@ -3,6 +3,8 @@
 // All errors will be passed to this middleware, and it will be responsible for sending the appropriate response.
 // We're only specifically handling validation errors here, but we could handle any error type we want.
 
+import { environment } from "../utils/environment";
+
 /**
  * Express error handling middleware.
  * Handles ZodError validation errors specifically.
@@ -18,6 +20,7 @@ export function errorHandler(err: any, _req: any, res: any, _next: any) {
       }),
     });
   } else {
+    environment.NODE_ENV === "development" && console.error(err);
     res.status(500).json({
       message: "An unexpected error occurred.",
     });
