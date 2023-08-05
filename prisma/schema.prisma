@@ -21,6 +21,9 @@ model Restaurant {
   tables       Table[]
   reservations Reservation[]
   attributes   RestaurantAttribute[]
+
+  // Denormalized data
+  attributeString String
 }
 
 model Table {

@@ -9,177 +9,178 @@ const prisma = new PrismaClient();
 // String enum docs: (feature not present in JS)
 // https://www.typescriptlang.org/docs/handbook/enums.html#string-enums
 enum attributes {
-    halal = "Halal",
-    vegan = "Vegan",
-    glutenFree = "Gluten Free",
-    dairyFree = "Dairy Free",
-    nutFree = "Nut Free",
-    soyFree = "Soy Free",
-    carnivore = "Carnivore",
+  halal = "Halal",
+  vegan = "Vegan",
+  glutenFree = "Gluten Free",
+  dairyFree = "Dairy Free",
+  nutFree = "Nut Free",
+  soyFree = "Soy Free",
+  carnivore = "Carnivore",
 }
 
 const restaurants = [
-    {
-        name: "Meat & Greet",
-        attributes: [attributes.carnivore, attributes.glutenFree, attributes.dairyFree, attributes.soyFree],
-        tables: [
-            { seats: 2, count: 4 },
-            { seats: 4, count: 4 },
-            { seats: 6, count: 2 },
-            { seats: 8, count: 1 },
-        ],
-    },
-    {
-        name: "Porky's Pot Pies",
-        attributes: [attributes.nutFree, attributes.soyFree],
-        tables: [
-            { seats: 2, count: 4 },
-            { seats: 4, count: 4 },
-            { seats: 6, count: 2 },
-            { seats: 8, count: 1 },
-        ],
-    },
-    {
-        name: "Burger Caliph",
-        attributes: [attributes.halal, attributes.dairyFree, attributes.nutFree, attributes.soyFree],
-        tables: [
-            { seats: 2, count: 4 },
-            { seats: 4, count: 4 },
-            { seats: 6, count: 1 },
-        ],
-    },
-    {
-        name: "Vegan Vibes",
-        attributes: [attributes.halal, attributes.vegan, attributes.dairyFree, attributes.nutFree],
-        tables: [
-            { seats: 2, count: 4 },
-            { seats: 4, count: 4 },
-            { seats: 6, count: 4 },
-        ],
-    },
+  {
+    name: "Meat & Greet",
+    attributes: [attributes.carnivore, attributes.glutenFree, attributes.dairyFree, attributes.soyFree],
+    tables: [
+      { seats: 2, count: 4 },
+      { seats: 4, count: 4 },
+      { seats: 6, count: 2 },
+      { seats: 8, count: 1 },
+    ],
+  },
+  {
+    name: "Porky's Pot Pies",
+    attributes: [attributes.nutFree, attributes.soyFree],
+    tables: [
+      { seats: 2, count: 4 },
+      { seats: 4, count: 4 },
+      { seats: 6, count: 2 },
+      { seats: 8, count: 1 },
+    ],
+  },
+  {
+    name: "Burger Caliph",
+    attributes: [attributes.halal, attributes.dairyFree, attributes.nutFree, attributes.soyFree],
+    tables: [
+      { seats: 2, count: 4 },
+      { seats: 4, count: 4 },
+      { seats: 6, count: 1 },
+    ],
+  },
+  {
+    name: "Vegan Vibes",
+    attributes: [attributes.halal, attributes.vegan, attributes.dairyFree, attributes.nutFree],
+    tables: [
+      { seats: 2, count: 4 },
+      { seats: 4, count: 4 },
+      { seats: 6, count: 4 },
+    ],
+  },
 ];
 
 const diners = [
-    {
-        name: "John",
-        attributes: [attributes.carnivore, attributes.soyFree],
-    },
-    {
-        name: "Jane",
-        attributes: [attributes.nutFree],
-    },
-    {
-        name: "Jill",
-        attributes: [],
-    },
-    {
-        name: "Jack",
-        attributes: [],
-    },
-    {
-        name: "Jenny",
-        attributes: [attributes.halal],
-    },
-    {
-        name: "Jared",
-        attributes: [],
-    },
-    {
-        name: "Jones",
-        attributes: [],
-    },
-    {
-        name: "Johann",
-        attributes: [],
-    },
-    {
-        name: "Johanna",
-        attributes: [attributes.halal],
-    },
-    {
-        name: "Janet",
-        attributes: [attributes.dairyFree],
-    },
-    {
-        name: "Jasper",
-        attributes: [],
-    },
-    {
-        name: "Jupiter",
-        attributes: [],
-    },
-    {
-        name: "Jabba",
-        attributes: [attributes.nutFree],
-    },
-    {
-        name: "Jor'El",
-        attributes: [],
-    },
+  {
+    name: "John",
+    attributes: [attributes.carnivore, attributes.soyFree],
+  },
+  {
+    name: "Jane",
+    attributes: [attributes.nutFree],
+  },
+  {
+    name: "Jill",
+    attributes: [],
+  },
+  {
+    name: "Jack",
+    attributes: [],
+  },
+  {
+    name: "Jenny",
+    attributes: [attributes.halal],
+  },
+  {
+    name: "Jared",
+    attributes: [],
+  },
+  {
+    name: "Jones",
+    attributes: [],
+  },
+  {
+    name: "Johann",
+    attributes: [],
+  },
+  {
+    name: "Johanna",
+    attributes: [attributes.halal],
+  },
+  {
+    name: "Janet",
+    attributes: [attributes.dairyFree],
+  },
+  {
+    name: "Jasper",
+    attributes: [],
+  },
+  {
+    name: "Jupiter",
+    attributes: [],
+  },
+  {
+    name: "Jabba",
+    attributes: [attributes.nutFree],
+  },
+  {
+    name: "Jor'El",
+    attributes: [],
+  },
 ];
 
 async function seed() {
-    // Seed restaurant attributes
-    const attributePromises = Object.values(attributes).map((attribute) => {
-        return prisma.restaurantAttribute.create({
-            data: { name: attribute },
-        });
+  // Seed restaurant attributes
+  const attributePromises = Object.values(attributes).map((attribute) => {
+    return prisma.restaurantAttribute.create({
+      data: { name: attribute },
     });
+  });
 
-    const createdAttributes = await Promise.all(attributePromises);
+  const createdAttributes = await Promise.all(attributePromises);
 
-    // Seed restaurants with tables & attributes
-    const restaurantPromises = restaurants.map((restaurant) => {
-        return prisma.restaurant.create({
-            data: {
-                name: restaurant.name,
-                attributes: {
-                    connect: restaurant.attributes.map((attribute) => {
-                        // Find the attribute id from the createdAttributes array
-                        const match = createdAttributes.find((createdAttribute) => {
-                            return createdAttribute.name === attribute;
-                        });
+  // Seed restaurants with tables & attributes
+  const restaurantPromises = restaurants.map((restaurant) => {
+    return prisma.restaurant.create({
+      data: {
+        name: restaurant.name,
+        attributeString: createdAttributes.map((attribute) => attribute.id).join(","),
+        attributes: {
+          connect: restaurant.attributes.map((attribute) => {
+            // Find the attribute id from the createdAttributes array
+            const match = createdAttributes.find((createdAttribute) => {
+              return createdAttribute.name === attribute;
+            });
 
-                        // This should never happen, but we'll throw an error just in case.
-                        if (!match) throw new Error(`No match found for attribute ${attribute}`);
+            // This should never happen, but we'll throw an error just in case.
+            if (!match) throw new Error(`No match found for attribute ${attribute}`);
 
-                        // Connect the attribute to the restaurant
-                        return { id: match.id };
-                    }),
-                },
-                tables: {
-                    create: convertTableDataIntoFlatArray(restaurant.tables).map((seats) => {
-                        return { seats };
-                    }),
-                },
-            },
-        });
+            // Connect the attribute to the restaurant
+            return { id: match.id };
+          }),
+        },
+        tables: {
+          create: convertTableDataIntoFlatArray(restaurant.tables).map((seats) => {
+            return { seats };
+          }),
+        },
+      },
     });
+  });
 
-    // Seed diners with attributes
-    const dinerPromises = diners.map((diner) => {
-        return prisma.diner.create({
-            data: {
-                name: diner.name,
-                requiredRestaurauntAttributes: {
-                    connect: diner.attributes.map((attribute) => {
-                        // Find the attribute id from the createdAttributes array
-                        const match = createdAttributes.find((createdAttribute) => {
-                            return createdAttribute.name === attribute;
-                        });
+  // Seed diners with attributes
+  const dinerPromises = diners.map((diner) => {
+    return prisma.diner.create({
+      data: {
+        name: diner.name,
+        requiredRestaurauntAttributes: {
+          connect: diner.attributes.map((attribute) => {
+            // Find the attribute id from the createdAttributes array
+            const match = createdAttributes.find((createdAttribute) => {
+              return createdAttribute.name === attribute;
+            });
 
-                        // This should never happen, but we'll throw an error just in case.
-                        if (!match) throw new Error(`No match found for attribute ${attribute}`);
+            // This should never happen, but we'll throw an error just in case.
+            if (!match) throw new Error(`No match found for attribute ${attribute}`);
 
-                        // Connect the attribute to the restaurant
-                        return { id: match.id };
-                    }),
-                },
-            },
-        });
+            // Connect the attribute to the restaurant
+            return { id: match.id };
+          }),
+        },
+      },
     });
+  });
 
-    await Promise.all([...restaurantPromises, ...dinerPromises]);
+  await Promise.all([...restaurantPromises, ...dinerPromises]);
 }
 
 seed();
@@ -191,10 +192,10 @@ seed();
  * @returns number[]
  */
 function convertTableDataIntoFlatArray(tables: { seats: number; count: number }[]): number[] {
-    const tableData = tables.map((table) => {
-        const { seats, count } = table;
-        return Array(count).fill(seats);
-    });
+  const tableData = tables.map((table) => {
+    const { seats, count } = table;
+    return Array(count).fill(seats);
+  });
 
-    return tableData.flat();
+  return tableData.flat();
 }
