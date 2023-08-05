@@ -4,12 +4,12 @@
 import type { ZodTypeAny } from "zod";
 
 export function validationMiddleware<T extends ZodTypeAny>(schema: T) {
-    return (req: any, _res: any, next: any) => {
-        try {
-        schema.parse(req.body);
-        next();
-        } catch (error) {
-        next(error);
-        }
-    };
+  return (req: any, _res: any, next: any) => {
+    try {
+      req.body = schema.parse(req.body);
+      next();
+    } catch (error) {
+      next(error);
+    }
+  };
 }

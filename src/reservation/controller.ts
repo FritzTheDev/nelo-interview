@@ -5,6 +5,7 @@ import { z } from "zod";
 import { PrismaClient } from "@prisma/client";
 
 import { restaurantSearchSchema } from "./validation";
+import { RequestHandler } from "express";
 
 const prisma = new PrismaClient();
 
@@ -48,15 +49,10 @@ export async function findAvailableRestaurants(data: ReservationSearchBody) {
           },
         },
       },
-      attributes: {
-        every: {
-          id: {
-            in: requiredAttributes.map((attribute) => attribute.id),
-          },
-        },
-      },
     },
   });
 
-  return candidateRestaurants
+  console.log(candidateRestaurants);
+
+  return candidateRestaurants;
 }
