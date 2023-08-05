@@ -8,6 +8,8 @@ import morgan from "morgan";
 import Express, { json } from "express";
 
 import { environment } from "./utils/environment";
+import { reservationRouter } from "./reservation/router";
+import { errorHandler } from "./middleware/errorHandler";
 
 // Create the express application
 export const app = Express();
@@ -18,3 +20,7 @@ environment.NODE_ENV === "development" ? app.use(cors()) : app.use(cors({ origin
 environment.NODE_ENV === "development" ? app.use(morgan("dev")) : app.use(morgan("tiny")); // Logging
 
 // Register routers
+app.use("/v1/reservation", reservationRouter);
+
+// Configure global error handling
+app.use(errorHandler);
