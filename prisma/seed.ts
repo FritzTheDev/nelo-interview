@@ -6,17 +6,15 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-// String enum docs: (feature not present in JS)
-// https://www.typescriptlang.org/docs/handbook/enums.html#string-enums
-enum attributes {
-  halal = "Halal",
-  vegan = "Vegan",
-  glutenFree = "Gluten Free",
-  dairyFree = "Dairy Free",
-  nutFree = "Nut Free",
-  soyFree = "Soy Free",
-  carnivore = "Carnivore",
-}
+const attributes = {
+  halal: "Halal",
+  vegan: "Vegan",
+  glutenFree: "Gluten Free",
+  dairyFree: "Dairy Free",
+  nutFree: "Nut Free",
+  soyFree: "Soy Free",
+  carnivore: "Carnivore",
+};
 
 const restaurants = [
   {
@@ -133,7 +131,11 @@ async function seed() {
     return prisma.restaurant.create({
       data: {
         name: restaurant.name,
-        attributeString: createdAttributes.map((attribute) => attribute.id).join(","),
+        // Create a string of this restaurant's attribute ids to store in the database
+        attributeString: createdAttributes
+          .filter((attribute) => Object.values(restaurant.attributes).includes(attribute.name))
+          .map((attribute) => attribute.id)
+          .join(","),
         attributes: {
           connect: restaurant.attributes.map((attribute) => {
             // Find the attribute id from the createdAttributes array
