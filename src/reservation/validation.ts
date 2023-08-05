@@ -1,10 +1,9 @@
+// reservation/validation.ts
+// Validation schemas for the reservation module.
+
 import { z } from "zod";
 
-/**
- * validate a request body to create a reservation
- */
-export const reservationSearchSchema = z.object({
+export const restaurantSearchSchema = z.object({
   dateTime: z.date(),
-  party: z.array(z.string().cuid()),
-  restaurant: z.string().cuid(),
+  party: z.array(z.string().cuid()).nonempty(),
 });
