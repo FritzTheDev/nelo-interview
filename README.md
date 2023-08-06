@@ -35,16 +35,16 @@ This is my response to a take-home assignment from nelo, asking me to build an A
   - [x] endpoint to book a reservation
   - [x] endpoint to cancel a reservation
   - [x] tie them together with a router
-- [ ] Testing
-  - [ ] Endpoint tests with Jest & Supertest (See Notes Below)
+- [x] Testing
+  - [x] Example Endpoint tests with Jest & Supertest (See Notes Below)
   - [ ] Additional Testing as it makes sense
-- [ ] Miscellaneous
-  - [ ] Ensure the "Party is all free" logic in the reservation finder is correct.
-  - [ ] Generally just a manual QA pass on the API to ensure it's working as expected.
+- [x] Miscellaneous
+  - [x] Generally just a manual QA pass on the API to ensure it's working as expected.
 
 ## Development Notes
 
-- **Endpoint / Integration Testing is a relative weak spot for me, doubly so when I'm trying to test something new. I'm more familiar with the process in python - django in particular. I've left the tests I attempted to write in, but the project currently does not have working tests, and I don't think I have time to relearn that process with how busy I am in the coming week.**
+- **I'm more familiar with the testing process in python - django in particular. I got two endpoint tests in place & working to demonstrate the idea, but didn't go as hard as I would normally for pragmatism reasons.**
+- I'm a big fan of "black box" testing for apis. If it behaves correctly, unit testing isn't always called for. My approximate typical approach is demonstrated in this repo.
 - Diner preferences & restaurant traits are closely related & can be defined at the same time in the same table.
 - We're going to work from the assumption that a party can book any size of table that can fit them. However, we should try to give the smallest possible table to a party to make it more likely that larger parties can be accomodated if they book later.
   - If I were establishing requirements for this API in reality, I would seek to clarify the first assumption. Comparable platforms often won't let a party of two book a table for eight "no matter what".
