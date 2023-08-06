@@ -15,6 +15,10 @@ This is my response to a take-home assignment from nelo, asking me to build an A
 
 **Check the TODO & notes below**
 
+- After first migrating the database, copy the `dev.sqlite` to `test-reference.sqlite`
+  - This is to ensure that the test database is in a known state before each test run.
+  - The test-reference database gets copied before each test, then the copy is deleted after each test.
+  - This three-file approach ensures that development isn't interfered with by tests, but that the tests are still run against a known state.
 - Run `npm run test` to run the test suite.
   - You can also run `npm run test:watch` to re-run tests as you make changes to the code.
 
