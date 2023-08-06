@@ -14,7 +14,7 @@ export const reservationRouter = Router();
 reservationRouter.post("/", validationMiddleware(createReservationSchema), async (req, res, next) => {
   try {
     const resBody = await createReservation(req.body);
-    return res.status(200).json(resBody);
+    return res.status(201).json(resBody);
   } catch (err) {
     return next(err);
   }
@@ -24,7 +24,7 @@ reservationRouter.post("/", validationMiddleware(createReservationSchema), async
 reservationRouter.post("/search", validationMiddleware(restaurantSearchSchema), async (req, res, next) => {
   try {
     const resBody = await findAvailableRestaurants(req.body);
-    return res.status(201).json(resBody);
+    return res.status(200).json(resBody);
   } catch (err) {
     return next(err);
   }

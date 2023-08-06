@@ -127,7 +127,7 @@ export async function createReservation(data: CreateReservationBody) {
       seats: {
         gte: data.party.length,
       },
-      restaurantId: data.restaurantId,
+      restaurantId: data.restaurant,
       reservations: {
         none: {
           dateTime: {
@@ -145,7 +145,6 @@ export async function createReservation(data: CreateReservationBody) {
   if (candidateTable === null) {
     throw new TableNotAvailableError();
   }
-  console.log(data.restaurantId);
   // Create the reservation.
   const reservation = await prisma.reservation.create({
     data: {
