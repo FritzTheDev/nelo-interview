@@ -127,62 +127,78 @@ async function seed() {
   const createdAttributes = await Promise.all(attributePromises);
 
   // Seed restaurants with tables & attributes
-  const restaurantPromises = restaurants.map((restaurant) => {
-    return prisma.restaurant.create({
-      data: {
-        name: restaurant.name,
-        // Create a string of this restaurant's attribute ids to store in the database
-        attributeIds: createdAttributes
-          .filter((attribute) => Object.values(restaurant.attributes).includes(attribute.name))
-          .map((attribute) => attribute.id)
-          .join(","),
-        attributes: {
-          connect: restaurant.attributes.map((attribute) => {
-            // Find the attribute id from the createdAttributes array
-            const match = createdAttributes.find((createdAttribute) => {
-              return createdAttribute.name === attribute;
-            });
+  const restaurantPromises = await Promise.all(
+    restaurants.map((restaurant) => {
+      return prisma.restaurant.create({
+        data: {
+          name: restaurant.name,
+          // Create a string of this restaurant's attribute ids to store in the database
+          attributeIds: createdAttributes
+            .filter((attribute) => Object.values(restaurant.attributes).includes(attribute.name))
+            .map((attribute) => attribute.id)
+            .join(","),
+          attributes: {
+            connect: restaurant.attributes.map((attribute) => {
+              // Find the attribute id from the createdAttributes array
+              const match = createdAttributes.find((createdAttribute) => {
+                return createdAttribute.name === attribute;
+              });
 
-            // This should never happen, but we'll throw an error just in case.
-            if (!match) throw new Error(`No match found for attribute ${attribute}`);
+              // This should never happen, but we'll throw an error just in case.
+              if (!match) throw new Error(`No match found for attribute ${attribute}`);
 
-            // Connect the attribute to the restaurant
-            return { id: match.id };
-          }),
+              // Connect the attribute to the restaurant
+              return { id: match.id };
+            }),
+          },
+          tables: {
+            create: convertTableDataIntoFlatArray(restaurant.tables).map((seats) => {
+              return { seats };
+            }),
+          },
         },
-        tables: {
-          create: convertTableDataIntoFlatArray(restaurant.tables).map((seats) => {
-            return { seats };
-          }),
-        },
-      },
-    });
-  });
+      });
+    }),
+  );
 
   // Seed diners with attributes
-  const dinerPromises = diners.map((diner) => {
-    return prisma.diner.create({
-      data: {
-        name: diner.name,
-        requiredRestaurauntAttributes: {
-          connect: diner.attributes.map((attribute) => {
-            // Find the attribute id from the createdAttributes array
-            const match = createdAttributes.find((createdAttribute) => {
-              return createdAttribute.name === attribute;
-            });
+  const dinerPromises = await Promise.all(
+    diners.map((diner) => {
+      return prisma.diner.create({
+        data: {
+          name: diner.name,
+          requiredRestaurauntAttributes: {
+            connect: diner.attributes.map((attribute) => {
+              // Find the attribute id from the createdAttributes array
+              const match = createdAttributes.find((createdAttribute) => {
+                return createdAttribute.name === attribute;
+              });
 
-            // This should never happen, but we'll throw an error just in case.
-            if (!match) throw new Error(`No match found for attribute ${attribute}`);
+              // This should never happen, but we'll throw an error just in case.
+              if (!match) throw new Error(`No match found for attribute ${attribute}`);
 
-            // Connect the attribute to the restaurant
-            return { id: match.id };
-          }),
+              // Connect the attribute to the restaurant
+              return { id: match.id };
+            }),
+          },
         },
+      });
+    }),
+  );
+
+  // Create reservation for Jor'El at Porky's Pot Pies
+  const jorEl = await prisma.diner.findFirst({ where: { name: "Jor'El" } });
+  const porkys = await prisma.restaurant.findFirst({ where: { name: "Porky's Pot Pies" }, include: { tables: true } });
+
+  if (jorEl && porkys) {
+    await prisma.reservation.create({
+      data: {
+        diners: { connect: { id: jorEl.id } },
+        table: { connect: { id: porkys.tables[0].id } },
+        dateTime: new Date(Date.now() + 1000 * 60 * 60 * 24), // one day from now
       },
     });
-  });
-
-  await Promise.all([...restaurantPromises, ...dinerPromises]);
+  }
 }
 
 seed();
