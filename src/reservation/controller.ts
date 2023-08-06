@@ -166,7 +166,6 @@ export async function createReservation(data: CreateReservationBody) {
 }
 
 // Cancel a given reservation by deleting it from the database.
-// As mentioned in the readme, this could probably benefit from being a soft-delete.
 export async function cancelReservation(id: string) {
   await prisma.reservation.delete({
     where: {
