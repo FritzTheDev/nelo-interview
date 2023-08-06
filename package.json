@@ -9,7 +9,7 @@
     "start": "node dist/index.js",
     "test": "jest",
     "test:watch": "jest --watchAll",
-    "seed": "ts-node prisma/seed.ts",
+    "seed": "prisma migrate reset --force",
     "format": "prettier --write \"src/**/*.ts\""
   },
   "author": "Frederick Johnson",
