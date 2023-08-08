@@ -32,7 +32,6 @@ This is my response to a take-home assignment from nelo, asking me to build an A
   - [x] validation schema for reservation search
   - [x] validation schema for reservation creation
   - [x] controller to find a reservation slot
-  - [x] controller to find a reservation slot
   - [x] controller to book a reservation
   - [x] controller to cancel a reservation
   - [x] endpoint to find a reservation slot
