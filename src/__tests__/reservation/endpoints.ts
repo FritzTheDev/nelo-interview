@@ -43,8 +43,8 @@ describe("POST /reservation", () => {
     await request(baseurl)
       .post("/reservation")
       .send({
-        party: [jorEl.id], // Jor'El
-        restaurant: porkys.id, // Porky's Pot Pies
+        party: [jorEl.id],
+        restaurant: porkys.id,
         dateTime: new Date(Date.now() + 1000 * 60 * 60 * 48), // two days from now
       })
       .set("Accept", "application/json")
@@ -55,10 +55,12 @@ describe("POST /reservation", () => {
 
 describe("POST /reservation/search", () => {
   it("should return status 200 when asked to search for available restaurants", async () => {
+    const jorEl = await prisma.diner.findFirst({ where: { name: "Jor'El" } });
+
     await request(baseurl)
       .post("/reservation/search")
       .send({
-        party: ["clkyoe40s001vs9rk4pccr14w"], // Jor'El
+        party: [jorEl.id],
         dateTime: new Date(Date.now() + 1000 * 60 * 60 * 24), // one day from now
       })
       .set("Accept", "application/json")
