@@ -35,7 +35,7 @@ This is my response to a take-home assignment from nelo, asking me to build an A
   - [x] controller to find a reservation slot
   - [x] controller to book a reservation
   - [x] controller to cancel a reservation
-  - [x] router to find a reservation slot
+  - [x] endpoint to find a reservation slot
   - [x] endpoint to book a reservation
   - [x] endpoint to cancel a reservation
   - [x] tie them together with a router
